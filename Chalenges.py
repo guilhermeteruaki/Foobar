@@ -10,7 +10,7 @@ def chalenge1( x, y):
 
     For example, given the lists x = [13, 5, 6, 2, 5] and y = [5, 2, 5, 13], the function solution(x, y) would return 6 because the list x contains the integer 6 and the list y doesn't. Given the lists x = [14, 27, 1, 4, 2, 50, 3, 1] and y = [2, 4, -4, 3, 1, 1, 14, 27, 50], the function solution(x, y) would return -4 because the list y contains the integer -4 and the list x doesn't.
 
-    In each test case, the lists x and y will always contain n non-unique integers where n is at least 1 but never more than 99, and one of the lists will contain an additional unique integer which should be returned by the function.  The same n non-unique integers will be present on both lists, but they might appear in a different order, like in the examples above. Commander Lambda likes to keep her numbers short, so every prisoner ID will be between -1000 and 1000.
+    In each test case, the lists x and y will always contain nFibbo non-unique integers where nFibbo is at least 1 but never more than 99, and one of the lists will contain an additional unique integer which should be returned by the function.  The same nFibbo non-unique integers will be present on both lists, but they might appear in a different order, like in the examples above. Commander Lambda likes to keep her numbers short, so every prisoner ID will be between -1000 and 1000.
 
     Languages
     =========
@@ -109,6 +109,7 @@ def chalenge2_1(pegs):
         -1,-1
     '''
     # used this solution to understand the chalenge, altough very similar, maybe even equals,  I tried to ajust the code to my liking
+    # https://stackoverflow.com/questions/40465866/google-foobar-gearing-up-for-destruction
     pegsLength = len(pegs)
     if pegsLength % 2 == 0:
         pegsSum = -pegs[0] + pegs[pegsLength-1]
@@ -143,8 +144,9 @@ def chalenge2_1(pegs):
 
     return [Answer.numerator, Answer.denominator]
 
-def chalenge2_2(total_lambs):   # def​ ​solution(total_lambs):
-        '''Lovely Lucky LAMBs
+def Chalenge2_2(total_lambs):
+    '''
+    Lovely Lucky LAMBs
     ==================
 
     Being a henchman isn't all drudgery. Occasionally, when Commander Lambda is feeling generous, she'll hand out Lucky LAMBs (Lambda's All-purpose Money Bucks). Henchmen can use Lucky LAMBs to buy things like a second pair of socks, a pillow for their bunks, or even a third daily meal!
@@ -198,13 +200,55 @@ def chalenge2_2(total_lambs):   # def​ ​solution(total_lambs):
 
     Use verify [file] to test your solution and see how it does. When you are finished editing your code, use submit [file] to submit your answer. If your solution passes the test cases, it will be removed from your home folder.
     '''
+    #generous follows a 2**n sequence, and stingy follows a fibbonachi sequence
+    fibboCache = {} 
+    sumFibbo = 0
+    nFibbo = 1
+   
+    def fibbonachi(n): #calculate fibbo of n
+       
+        if n in fibboCache: # look in fibbo cache
+             return fibboCache[n] # get fibbo return
+        else: #if fibbo was not computed previusly 
+            if n == 1:
+                value =  1                    
+            elif n == 2:
+                value =  1
+            else:
+                value = (fibbonachi(n -1) + fibbonachi(n-2))
 
-
-    nGenerous
-    nStingy
-    sumGenerous
-    sumStingy
-
-    fibo
-    twoNPower
+        fibboCache[n] = value
+        return value
     
+    while sumFibbo <= total_lambs: # adds fibbo[n] to sum
+       sumFibbo += fibbonachi(nFibbo) 
+       
+       nFibbo += 1
+       
+    
+    
+    sumTwoN =0
+    nTwoN = 1
+    while sumTwoN < total_lambs:
+        if nTwoN == 1: 
+            sumTwoN += 1
+            nTwoN += 1
+        else:
+            sumTwoN += 2**(nTwoN-1)
+            nTwoN += 1
+        
+        #through the comment of vnuno here (https://stackoverflow.com/questions/43429328/google-foobar-python-failure-on-two-tests-lovely-lucky-lambs-counting-of-seq)
+        # I was able to understand that the test 9 that I had problems was due to having extra money left
+        # so I was able to veryfy if the money left was enought to pay a extra henchan not the min nor the maximun salary
+    leftOver = total_lambs - 2**(nTwoN-2) +1 #left over money
+    lastTwohench = 2**(nTwoN-3)+2**(nTwoN-4) #minumiun amount of rule #3
+
+    if leftOver > lastTwohench: #check money left 
+        nTwoN +=1 #hire one more henchman
+    
+    #needs to be -2 since my code adds 1 at the end and the while counter only stops after the sum goes over total_lambs
+    answer = int((nFibbo-2)- (nTwoN-2)) 
+    return answer 
+
+def Chalenge3_1():
+    test

@@ -1,6 +1,9 @@
-from Chalenges import chalenge2_2
+from Chalenges import chalenge2_2, solution
 
 
 
-print ( )
-print ( )
+
+
+#print (solution(143))
+print (solution(13))
+#print (solution(10))
