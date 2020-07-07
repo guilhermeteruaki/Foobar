@@ -143,7 +143,7 @@ def chalenge2_1(pegs):
             R1 = R2
 
     return [Answer.numerator, Answer.denominator]
-
+ 
 def Chalenge2_2(total_lambs):
     '''
     Lovely Lucky LAMBs
@@ -201,10 +201,10 @@ def Chalenge2_2(total_lambs):
     Use verify [file] to test your solution and see how it does. When you are finished editing your code, use submit [file] to submit your answer. If your solution passes the test cases, it will be removed from your home folder.
     '''
     #generous follows a 2**n sequence, and stingy follows a fibbonachi sequence
-    fibboCache = {} 
+    # fibboCache = {} 
     sumFibbo = 0
     nFibbo = 1
-   
+    fibboCache = {}
     def fibbonachi(n): #calculate fibbo of n
        
         if n in fibboCache: # look in fibbo cache
@@ -248,7 +248,229 @@ def Chalenge2_2(total_lambs):
     
     #needs to be -2 since my code adds 1 at the end and the while counter only stops after the sum goes over total_lambs
     answer = int((nFibbo-2)- (nTwoN-2)) 
-    return answer 
+    return answer
 
-def Chalenge3_1():
-    test
+
+def Chalenge3_1(x,y):
+   
+    def readMeFooBar():
+
+        '''
+        Bomb, Baby!
+        ===========
+
+        You're so close to destroying the LAMBCHOP doomsday device you can taste it! But in order to do so, you need to
+        deploy special self-replicating bombs designed for you by the brightest scientists on Bunny Planet. There are 
+        two types: Mach bombs (M) and Facula bombs (F). The bombs, once released into the LAMBCHOP's inner workings, 
+        will automatically deploy to all the strategic points you've identified and destroy them at the same time. 
+
+        But there's a few catches. First, the bombs self-replicate via one of two distinct processes: 
+        Every Mach bomb retrieves a sync unit from a Facula bomb; for every Mach bomb, a Facula bomb is created;
+        Every Facula bomb spontaneously creates a Mach bomb.
+
+        For example, if you had 3 Mach bombs and 2 Facula bombs, they could either produce 3 Mach bombs and 5 Facula bombs, 
+        or 5 Mach bombs and 2 Facula bombs. The replication process can be changed each cycle. 
+
+        Second, you need to ensure that you have exactly the right number of Mach and Facula bombs to destroy the 
+        LAMBCHOP device. Too few, and the device might survive. Too many, and you might overload the mass capacitors
+        and create a singularity at the heart of the space station - not good! 
+
+        And finally, you were only able to smuggle one of each type of bomb - one Mach, one Facula - 
+        aboard the ship when you arrived, so that's all you have to start with. (Thus it may be impossible to deploy 
+        the bombs to destroy the LAMBCHOP, but that's not going to stop you from trying!) 
+
+        You need to know how many replication cycles (generations) it will take to generate the correct amount of bombs
+        to destroy the LAMBCHOP. Write a function solution(M, F) where M and F are the number of Mach and Facula bombs
+        needed. Return the fewest number of generations (as a string) that need to pass before you'll have the exact 
+        number of bombs necessary to destroy the LAMBCHOP, or the string "impossible" if this can't be done! M and F 
+        will be string representations of positive integers no larger than 10^50. For example, if M = "2" and F = "1",
+        one generation would need to pass, so the solution would be "1". However, if M = "2" and F = "4", it would not 
+        be possible.
+
+        Languages
+        =========
+
+        To provide a Java solution, edit Solution.java
+        To provide a Python solution, edit solution.py
+
+        Test cases
+        ==========
+        Your code should pass the following test cases.
+        Note that it may also be run against hidden test cases not shown here.
+
+        -- Java cases --
+        Input:
+        Solution.solution('2', '1')
+        Output:
+            1
+
+        Input:
+        Solution.solution('4', '7')
+        Output:
+            4
+
+        -- Python cases --
+        Input:
+        solution.solution('4', '7')
+        Output:
+            4
+
+        Input:
+        solution.solution('2', '1')
+        Output:
+            1
+
+        Use verify [file] to test your solution and see how it does. When you are finished editing your code, use submit [file] to submit your answer. If your solution passes the test cases, it will be removed from your home folder.
+        '''
+    def tentativa1(): #do not pass some cases. need rework
+        '''from collections import deque
+        import math
+        bombM = int(total_bombs[0]) 
+        bombF = int(total_bombs[1])
+        factor = [0]
+        transf = [0]
+        MFList= deque()
+        answer = [None]
+        def MbiggerThanF(M,F):
+            factor[0] = math.floor(M/F)
+            X1 = M-factor[0]*F
+                
+            return [X1,F]
+            
+        def FbiggerThanM(M,F):
+            factor[0] = math.floor(F/M)
+            X1 = F-factor[0]*M
+            return [M,X1]
+
+        def subtraction(A,B):
+            if A>B:
+                transf[0] += 1
+                return (A-B,B)
+                
+            elif A<B:
+                transf[0] += 1
+                return (A, B-A)
+                
+            else:
+                answer[0] = "impossible"
+                return (0,0)     
+
+        if bombM==1 and bombF==1:
+            answer[0] = "impossible"
+            
+
+        elif bombM == 1 and bombM>0 and bombF>0:
+            answer[0] = bombF - 1
+
+        elif bombF == 1 and bombM>0 and bombF>0:
+            answer[0] = bombM - 1
+
+        elif bombM<1 or bombF<1:
+            answer[0] = "impossible"
+        else:
+            
+            if bombM>bombF:
+                i = 1
+            
+                dataA = MbiggerThanF(bombM,bombF)[0]
+                dataB = MbiggerThanF(bombM,bombF)[1] 
+                MFList.append((dataA,dataB))
+                while i!=0:
+                    dataA = (MFList[0])[0]
+                    dataB = (MFList[0])[1]
+                    MFList.popleft()
+                    if dataA>=1 and dataB>=1:
+                        temp1 = subtraction(dataA,dataB)[0]
+                        temp2 = subtraction(dataA,dataB)[1]
+                        transf[0] -= 1
+                        if temp1==1 and temp2 == 1:
+                            #answer[0]= transf[0] + factor[0]
+                            i=0
+                        else:
+                            MFList.append((temp1,temp2))
+                    else:
+                        i=0
+                        
+            elif bombM<bombF:
+                
+                i = 1
+            
+                dataA = FbiggerThanM(bombM,bombF)[0]
+                dataB = FbiggerThanM(bombM,bombF)[1] 
+                MFList.append((dataA,dataB))
+                while i!=0:
+                    dataA = (MFList[0])[0]
+                    dataB = (MFList[0])[1]
+                    MFList.popleft()
+                    if dataA>=1 and dataB>=1:
+                        temp1 = subtraction(dataA,dataB)[0]
+                        temp2 = subtraction(dataA,dataB)[1]
+                        transf[0] -= 1
+                        if temp1==1 and temp2 == 1:
+                            #answer[0]= transf[0] + factor[0]
+                            i=0
+                        else:
+                            MFList.append((temp1,temp2))
+                    else:
+                        i=0
+
+        if answer[0] == "impossible":
+            print( str(answer[0]))
+            #print(type(str(answer[0])))
+        elif answer[0] == None:            
+            answer[0] = transf[0] + factor[0]
+            print ( str(answer[0]))
+        # print(type(str(answer[0])))
+        else:
+        print( str(answer[0]))
+        # print(type(str(answer[0])))
+        '''
+    
+        
+
+def answer(x, y):
+    answer = 0
+    m, f = int(x), int(y)
+    i=0
+
+    if m == 1 and f == 1:
+        return str(answer)
+
+    elif m<1 or f<1 or m==f:
+        i=1
+        return "impossible"
+
+    elif m ==1:
+        return str(f-1)
+
+    elif f==1:
+        return str(m-1)
+
+    elif m>f:
+        temp = int(m/f)
+        answer += temp
+
+        m = m - (temp*f)
+
+    elif m<f:
+        temp = int(m/f)
+        answer += temp
+
+        f = f - (temp*m)
+    
+    while i!=1:
+        if m == 1 and f == 1:
+            i=1
+            return str(answer)
+        elif m<1 or f<1 or m==f:
+            i=1
+            return "impossible"
+        else:
+            if m > f:
+               
+                m-=f
+                answer += 1
+            else:
+               
+                f-=m
+                answer += 1       
